@@ -26,6 +26,7 @@
 
         <!--Photo-->
         <ImageView
+            android:id="@+id/imvPhoto"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/photo"
             android:layout_width="wrap_content"
