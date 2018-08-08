@@ -22,8 +22,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,6 +42,8 @@ public class RegisterFragment extends Fragment {
     private Uri uri;
     private ImageView imageView;
     private boolean aBoolean = true;
+    private String nameString,emailString,passwordString;
+
 
 
     @Override
@@ -73,9 +79,9 @@ public class RegisterFragment extends Fragment {
         EditText passwordEditText = getView().findViewById(R.id.edtPassword);
 //        Get Value From EditText
 
-        String nameString = nameEditText.getText().toString().trim();
-        String emailString = emailEditText.getText().toString().trim();
-        String passwordString = passwordEditText.getText().toString().trim();
+        nameString = nameEditText.getText().toString().trim();
+        emailString = emailEditText.getText().toString().trim();
+        passwordString = passwordEditText.getText().toString().trim();
         //        Check Choose Photo;
         if (aBoolean) {
 
@@ -91,9 +97,29 @@ public class RegisterFragment extends Fragment {
                     "Please Fill All Every Blank");
         } else {
 //None space
-
+createAuthentication();
             uplaodPhotoToFirebase();
         }
+
+    }
+
+    private void createAuthentication() {
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.createUserWithEmailAndPassword(emailString,passwordString)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                        } else {
+                          MyAlert myAlert = new MyAlert(getActivity());
+                          myAlert.normalDialog("Can not register",
+                                  "Because ==>" + task.getException().getMessage());
+
+                        }
+                    }
+                });
 
     }
 
@@ -101,7 +127,7 @@ public class RegisterFragment extends Fragment {
 
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
-        StorageReference storageReference1 = storageReference.child("Avata/"+ "avata");
+        StorageReference storageReference1 = storageReference.child("Avata/"+ nameString);
 
         storageReference1.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
