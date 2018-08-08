@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,7 +43,8 @@ public class RegisterFragment extends Fragment {
     private Uri uri;
     private ImageView imageView;
     private boolean aBoolean = true;
-    private String nameString,emailString,passwordString;
+    private String nameString,emailString,passwordString,
+           uidString,pathURLString, myPostString;
 
 
 
@@ -105,21 +107,28 @@ createAuthentication();
 
     private void createAuthentication() {
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(emailString,passwordString)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+uidString = firebaseAuth.getCurrentUser().getUid();
+                            Log.d("8AunV1","uidString==>" + uidString);
+//Huawei = Log.wtf(TAG,msg); samsung=8AunV1
 
                         } else {
                           MyAlert myAlert = new MyAlert(getActivity());
                           myAlert.normalDialog("Can not register",
                                   "Because ==>" + task.getException().getMessage());
 
+
                         }
                     }
                 });
+
+
+
 
     }
 
@@ -134,6 +143,8 @@ createAuthentication();
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getActivity(),"Success Upload Photo", Toast.LENGTH_SHORT).show();
 
+                findPathUrlPhoto();
+
             }
 
         }).addOnFailureListener(new OnFailureListener() {
@@ -144,6 +155,10 @@ createAuthentication();
         });
 
     }// uploadPhoto
+
+    private void findPathUrlPhoto() {
+
+    }// Find Path of Photo
 
 
     @Override
