@@ -12,14 +12,18 @@ public class ServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
 
+//Add Fragment
+        addFragment(savedInstanceState);
+
+
+    }//Main Method
+
+    private void addFragment(Bundle savedInstanceState) {
         if (savedInstanceState==null) {
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contentServiceFragment,new ServiceFragment())
                     .commit();
         }
-
-
-
-    }//Main Method
+    }
 }//Main Class

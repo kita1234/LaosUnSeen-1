@@ -26,19 +26,54 @@
         android:layout_height="match_parent"/>
 
     <!--Drawer Menu-->
-
     <LinearLayout
         android:layout_gravity="start"
         android:background="#ffffff"
         android:orientation="vertical"
         android:layout_width="320dp"
         android:layout_height="match_parent">
-        <TextView
-            android:textStyle="bold"
-            android:textSize="@dimen/h1"
-            android:text="Draw Menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
+
+
+        <!--Show Name and Picture-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Name-->
+
+           <TextView
+               android:textStyle="bold"
+               android:textSize="@dimen/h1"
+               android:text="Drawer Menu"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <!--Exit-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Icon-->
+            <ImageView
+                android:src="@drawable/ic_action_sign_out_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Text-->
+            <TextView
+                android:id="@+id/txtExit"
+                android:clickable="true"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/h2"
+                android:text="Exit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
 
     </LinearLayout>
