@@ -33,6 +33,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 import masterung.androidthai.in.th.laosunseen.MainActivity;
 import masterung.androidthai.in.th.laosunseen.R;
 import masterung.androidthai.in.th.laosunseen.utility.MyAlert;
@@ -126,10 +128,6 @@ uidString = firebaseAuth.getCurrentUser().getUid();
                         }
                     }
                 });
-
-
-
-
     }
 
     private void uplaodPhotoToFirebase() {
@@ -144,6 +142,7 @@ uidString = firebaseAuth.getCurrentUser().getUid();
                 Toast.makeText(getActivity(),"Success Upload Photo", Toast.LENGTH_SHORT).show();
 
                 findPathUrlPhoto();
+                createPost();
 
             }
 
@@ -156,7 +155,45 @@ uidString = firebaseAuth.getCurrentUser().getUid();
 
     }// uploadPhoto
 
+    private void createPost() {
+
+        ArrayList<String> stringArrayList= new ArrayList<>();
+        stringArrayList.add("Hello");
+        myPostString = stringArrayList.toString();
+        Log.d("9AugV1","myPost"+myPostString);
+
+    }
+
     private void findPathUrlPhoto() {
+
+        try {
+
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference storageReference = firebaseStorage.getReference();
+            final String[] urlStrings = new String[1];
+
+            storageReference.child("Avata").child(nameString)
+                    .getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            urlStrings[0] = uri.toString();
+                            pathURLString = urlStrings[0];
+                            Log.d("9AugV1","pathURL==>" + pathURLString);
+//                            Log.d("9AugV1","pathURL++>" + pathURLString);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("9AugV1","e Error==>" + e.toString());
+                }
+            });
+
+        } catch (Exception e) {
+e.printStackTrace();
+        }
+
 
     }// Find Path of Photo
 
