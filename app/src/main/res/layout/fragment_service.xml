@@ -5,10 +5,10 @@
 
 
 <!--List Friend-->
-<ListView
-    android:layout_above="@+id/linearBottom"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"></ListView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/linearBottom"></ListView>
 
     <!--Post-->
     <LinearLayout
@@ -21,6 +21,7 @@
 
         <!--TextField-->
         <EditText
+            android:id="@+id/edtPost"
             android:inputType="text"
             android:hint="Your Post"
             android:layout_weight="4"
@@ -29,6 +30,7 @@
 
         <!--Button-->
 <Button
+    android:id="@+id/btnPost"
     android:background="@drawable/bg_button"
     android:text="Post"
     android:layout_weight="1.5"
